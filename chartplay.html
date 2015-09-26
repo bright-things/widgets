@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/TsData.js"></script>
+
+    <script type="text/javascript">
+
+
+	// We instantiate one TsData object per channel here in the header
+	var ts = new TsData();
+	ts.setApiKey('5E758GPIXIM2JWN4');
+	ts.setChannelId(57433);
+
+	var dataTable;
+	var chart1, options1;
+	var chart2, options2;
+
+	function refreshData() {
+            console.log("RefreshData Called");
+            dataTable = ts.getDataTable(showCharts);
+	}
+
+	function showCharts() {
+            console.log("ShowCharts Called");
+            chart1.draw(dataTable, options1);
+            chart2.draw(dataTable, options2);
+	}
+
+	function initCharts() {
+
+
+            chart1 = new google.visualization.LineChart(document.getElementById('chart1'));
+            options1 = {width: 600, height: 400};
+
+            chart2 = new google.visualization.AreaChart(document.getElementById('chart2'));
+            options2 = {width: 600, height: 400};
+
+	    refreshData();
+	}
+
+        // load the google gauge visualization
+        google.load('visualization', '1', {packages:['corechart']});
+        google.setOnLoadCallback(initCharts);
+
+        setInterval('refreshData()', 60000);
+    </script>
+
+  </head>
+
+  <body>
+    <h1>Line Chart</h1>
+    <div id="chart1"></div>
+    <h1>Area Chart</h1>
+    <div id="chart2"></div>
+  </body>
+</html>
