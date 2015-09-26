@@ -98,7 +98,7 @@ TsData.prototype.getMax = function() {
     return this.max;
 }
 
-TsData.prototype.setRound = function() {
+TsData.prototype.setRound = function(round) {
     this.round = round;
 }
 
