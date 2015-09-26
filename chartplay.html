@@ -1,73 +1,81 @@
 <html>
-  <head>
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js/TsData.js"></script>
 
-    <script type="text/javascript">
+    <head>
+        <!--Load the AJAX API-->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/TsData.js"></script>
 
+        <script type="text/javascript">
 
-	// We instantiate one TsData object per channel here in the header
-	var ts = new TsData();
-	// ts.setBaseUrl("");
-	ts.setChannelId(57433);
-	// ts.setApiKey("");
-	// ts.setResults(100);
-	ts.setDays(30);
-	// ts.setStart("");
-	// ts.setEnd("");
-	// ts.setMin(0);
-	// ts.setMax(100);
-	ts.setRound(2);
-	// ts.setTimescale(10);
-	// ts.setSum(10);
-	ts.setAverage(10);
-	// ts.setMedian(100);
+	        // We instantiate one TsData object per channel here in the header
+	        var ts = new TsData();
+	        // ts.setBaseUrl("");
+	        ts.setChannelId(57433);
+	        // ts.setApiKey("");
+	        // ts.setResults(100);
+	        ts.setDays(30);
+	        // ts.setStart("");
+	        // ts.setEnd("");
+	        // ts.setMin(0);
+	        // ts.setMax(100);
+	        ts.setRound(2);
+	        // ts.setTimescale(10);
+	        // ts.setSum(10);
+	        ts.setAverage(10);
+	        // ts.setMedian(100);
 	
 
-	var dataTable;
-	var chart1, options1;
-	var chart2, options2;
+	        var dataTable;
+	        var chart1, view1, options1;
+	        var chart2, view2, options2;
 
-	function refreshData() {
-            console.log("RefreshData Called");
-            dataTable = ts.getDataTable(showCharts);
-	}
+	        function refreshData() {
+                    console.log("RefreshData Called");
+                    dataTable = ts.getDataTable(showCharts);
+        	}
 
-	function showCharts() {
-            console.log("ShowCharts Called");
-            chart1.draw(dataTable, options1);
-            chart2.draw(dataTable, options2);
-	}
+	        function showCharts() {
+                console.log("ShowCharts Called");
 
-	function initCharts() {
+                // We can introduce views here to limit the number of columns 
+                // displayed.  Default is to show all columns.
+                view1 = new google.visualization.DataView(dataTable);
+                view1.setColumns([0, 1]);
+                chart1.draw(view1, options1);
+                view2 = new google.visualization.DataView(dataTable);
+                chart2.draw(view2, options2);
+	        }
 
+	        function initCharts() {
 
-            chart1 = new google.visualization.LineChart(document.getElementById('chart1'));
-            options1 = {width: 800, height: 600};
+                chart1 = new google.visualization.LineChart(document.getElementById('chart1'));
+                options1 = {width: 800, height: 600};
 
-            chart2 = new google.visualization.AreaChart(document.getElementById('chart2'));
-            options2 = {width: 800, height: 600};
+                chart2 = new google.visualization.AreaChart(document.getElementById('chart2'));
+                options2 = {width: 800, height: 600};
 
-	    refreshData();
-	}
+	            refreshData();
+	        }
 
-        // load the google gauge visualization
-        google.load('visualization', '1', {packages:['corechart']});
-        google.setOnLoadCallback(initCharts);
+            // load the google chart visualization
+            google.load('visualization', '1', {packages:['corechart']});
+            google.setOnLoadCallback(initCharts);
 
-        setInterval('refreshData()', 60000);
-    </script>
+            setInterval('refreshData()', 60000);
+        </script>
 
-  </head>
+    </head>
 
-  <body>
-    <h1>Populating Google Charts with ThingSpeak Data</h1>
-    <p>Notice that these charts are live</p>
-    <h2>Line Chart</h2>
-    <div id="chart1"></div>
-    <h2>Area Chart</h2>
-    <div id="chart2"></div>
-  </body>
+    <body>
+        <h1>Populating Google Charts with ThingSpeak Data</h1>
+        <p>Notice that these charts are live</p>
+        <h2>Line Chart</h2>
+        <div id="chart1"></div>
+        <h2>Area Chart</h2>
+        <div id="chart2"></div>
+    </body>
 </html>
+<!--+
+    | vim: ts=4 et nowrap
+    +-->
