@@ -153,6 +153,8 @@ TsData.prototype.getDataTable = function(callback) {
     if (getAverage()) requestUrl += '?averate=' + getAverage();
     if (getMedian()) requestUrl += '?median=' + getMedian();
 
+    console.log("Request URL: " + requestUrl);
+
     // get the data from thingspeak
     $.getJSON(requestUrl, function(data) {
 
