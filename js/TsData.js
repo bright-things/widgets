@@ -95,7 +95,15 @@ TsData.prototype.setMax = function(max) {
 }
 
 TsData.prototype.getMax = function() {
-    return
+    return this.max;
+}
+
+TsData.prototype.setRound = function() {
+    this.round = round;
+}
+
+TsData.prototype.getRound = function() {
+    return this.round;
 }
 
 TsData.prototype.setTimescale = function(timescale) {
