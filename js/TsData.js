@@ -138,20 +138,20 @@ TsData.prototype.getDataTable = function(callback) {
 
     dataTable.addColumn('datetime', 'Date & Time'); 
 
-    var requestUrl = getBaseUrl() + '/channels/' + getChannelId() + '/feeds.json';
+    var requestUrl = this.getBaseUrl() + '/channels/' + this.getChannelId() + '/feeds.json';
 
-    if (getApiKey()) requestUrl += '?api_key=' + getApiKey();
-    if (getResults()) requestUrl += '?results=' + getResults();
-    if (getDays()) requestUrl += '?days=' + getDays();
-    if (getStart()) requestUrl += '?start=' + getStart();
-    if (getEnd()) requestUrl += '?end=' + getEnd();
-    if (getMin()) requestUrl += '?min=' + getMin();
-    if (getMax()) requestUrl += '?max=' + getMax();
-    if (getRound()) requestUrl += '?round=' + getRound();
-    if (getTimescale()) requestUrl += '?timescale=' + getTimescale();
-    if (getSun()) requestUrl += '?sum=' + getSum();
-    if (getAverage()) requestUrl += '?averate=' + getAverage();
-    if (getMedian()) requestUrl += '?median=' + getMedian();
+    if (this.getApiKey()) requestUrl += '?api_key=' + this.getApiKey();
+    if (this.getResults()) requestUrl += '?results=' + this.getResults();
+    if (this.getDays()) requestUrl += '?days=' + this.getDays();
+    if (this.getStart()) requestUrl += '?start=' + this.getStart();
+    if (this.getEnd()) requestUrl += '?end=' + this.getEnd();
+    if (this.getMin()) requestUrl += '?min=' + this.getMin();
+    if (this.getMax()) requestUrl += '?max=' + this.getMax();
+    if (this.getRound()) requestUrl += '?round=' + this.getRound();
+    if (this.getTimescale()) requestUrl += '?timescale=' + this.getTimescale();
+    if (this.getSun()) requestUrl += '?sum=' + this.getSum();
+    if (this.getAverage()) requestUrl += '?averate=' + this.getAverage();
+    if (this.getMedian()) requestUrl += '?median=' + this.getMedian();
 
     console.log("Request URL: " + requestUrl);
 
