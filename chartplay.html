@@ -3,15 +3,17 @@
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js/TsData.js"></script>
+    <script type="text/javascript" src="https://rawgithub.com/bright-things/widgets/master/js/TsData.js"></script>
 
     <script type="text/javascript">
 
 
 	// We instantiate one TsData object per channel here in the header
 	var ts = new TsData();
-	ts.setApiKey('5E758GPIXIM2JWN4');
 	ts.setChannelId(57433);
+	ts.setDays(30);
+	ts.setRound(2);
+	ts.setAverage(10);
 
 	var dataTable;
 	var chart1, options1;

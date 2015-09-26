@@ -13,7 +13,17 @@ var TsData = function() {
     this.baseUrl = "https://api.thingspeak.com";
     this.apiKey = "";
     this.channelId  = "";
-
+    this.results = null;
+    this.days = 7;
+    this.start = null;
+    this.end = null;
+    this.min = null;
+    this.max = null;
+    this.round = null;
+    this.timescale = null;
+    this.sum = null;
+    this.average = null;
+    this.median = null;
 }
 
 TsData.prototype.setBaseUrl = function(baseUrl) {
@@ -40,6 +50,86 @@ TsData.prototype.getChannelId = function() {
     return this.channelId;
 }
 
+TsData.prototype.setResults = function(results) {
+    this.results = results;
+}
+
+TsData.prototype.getResults = function() {
+    return this.results;
+}
+
+TsData.prototype.setDays = function(days) {
+    this.days = days;
+}
+
+TsData.prototype.getDays = function() {
+    return this.days;
+}
+
+TsData.prototype.setStart = function(start) {
+    this.start = start;
+}
+
+TsData.prototype.getStart = function() {
+    return this.start;
+}
+
+TsData.prototype.setEnd = function(end) {
+    this.end = end;
+}
+
+TsData.prototype.getEnd = function() {
+    return this.end;
+}
+
+TsData.prototype.setMin = function(min) {
+    this.min = min;
+}
+
+TsData.prototype.getMin = function() {
+    return this.min;
+}
+
+TsData.prototype.setMax = function(max) {
+    this.max = max;
+}
+
+TsData.prototype.getMax = function() {
+    return
+}
+
+TsData.prototype.setTimescale = function(timescale) {
+    this.timescale = timescale;
+}
+
+TsData.prototype.getTimescale = function() {
+    return this.timescale;
+}
+
+TsData.prototype.setSum = function(sum) {
+    this.sum = sum;
+}
+
+TsData.prototype.getSum = function() {
+    return this.sum;
+}
+
+TsData.prototype.setAverage = function(average) {
+    this.average = average;
+}
+
+TsData.prototype.getAverage = function() {
+    return this.average;
+}
+
+TsData.prototype.setMedian = function(median) {
+    this.median = median;
+}
+
+TsData.prototype.getMedian = function() {
+    return this.median;
+}
+
 TsData.prototype.getDataTable = function(callback) {
 
     console.log("TsData getDataTable called");
@@ -48,8 +138,23 @@ TsData.prototype.getDataTable = function(callback) {
 
     dataTable.addColumn('datetime', 'Date & Time'); 
 
+    var requestUrl = getBaseUrl() + '/channels/' + getChannelId() + '/feeds.json';
+
+    if (getApiKey()) requestUrl += '?api_key=' + getApiKey();
+    if (getResults()) requestUrl += '?results=' + getResults();
+    if (getDays()) requestUrl += '?days=' + getDays();
+    if (getStart()) requestUrl += '?start=' + getStart();
+    if (getEnd()) requestUrl += '?end=' + getEnd();
+    if (getMin()) requestUrl += '?min=' + getMin();
+    if (getMax()) requestUrl += '?max=' + getMax();
+    if (getRound()) requestUrl += '?round=' + getRound();
+    if (getTimescale()) requestUrl += '?timescale=' + getTimescale();
+    if (getSun()) requestUrl += '?sum=' + getSum();
+    if (getAverage()) requestUrl += '?averate=' + getAverage();
+    if (getMedian()) requestUrl += '?median=' + getMedian();
+
     // get the data from thingspeak
-    $.getJSON('https://api.thingspeak.com/channels/' + this.channelId + '/feeds.json?api_key=' + this.apiKey + '&results=8000&average=10', function(data) {
+    $.getJSON(requestUrl, function(data) {
 
         console.log("Channel id: " + data.channel.id);
         console.log("Channel name: " + data.channel.name);
