@@ -10,10 +10,21 @@
 
 	// We instantiate one TsData object per channel here in the header
 	var ts = new TsData();
+	// ts.setBaseUrl("");
 	ts.setChannelId(57433);
+	// ts.setApiKey("");
+	// ts.setResults(100);
 	ts.setDays(30);
+	// ts.setStart("");
+	// ts.setEnd("");
+	// ts.setMin(0);
+	// ts.setMax(100);
 	ts.setRound(2);
+	// ts.setTimescale(10);
+	// ts.setSum(10);
 	ts.setAverage(10);
+	// ts.setMedian(100);
+	
 
 	var dataTable;
 	var chart1, options1;
@@ -34,10 +45,10 @@
 
 
             chart1 = new google.visualization.LineChart(document.getElementById('chart1'));
-            options1 = {width: 600, height: 400};
+            options1 = {width: 800, height: 600};
 
             chart2 = new google.visualization.AreaChart(document.getElementById('chart2'));
-            options2 = {width: 600, height: 400};
+            options2 = {width: 800, height: 600};
 
 	    refreshData();
 	}
@@ -52,9 +63,11 @@
   </head>
 
   <body>
-    <h1>Line Chart</h1>
+    <h1>Google Charts with ThingSpeak Data</h1>
+    <p>Notice that these charts are live</p>
+    <h2>Line Chart</h2>
     <div id="chart1"></div>
-    <h1>Area Chart</h1>
+    <h2>Area Chart</h2>
     <div id="chart2"></div>
   </body>
 </html>
