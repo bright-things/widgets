@@ -157,7 +157,7 @@ TsData.prototype.getDataTable = function(callback) {
     if (this.getMax()) requestUrl += '?max=' + this.getMax();
     if (this.getRound()) requestUrl += '?round=' + this.getRound();
     if (this.getTimescale()) requestUrl += '?timescale=' + this.getTimescale();
-    if (this.getSun()) requestUrl += '?sum=' + this.getSum();
+    if (this.getSum()) requestUrl += '?sum=' + this.getSum();
     if (this.getAverage()) requestUrl += '?averate=' + this.getAverage();
     if (this.getMedian()) requestUrl += '?median=' + this.getMedian();
 
