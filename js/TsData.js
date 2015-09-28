@@ -3,7 +3,6 @@
  * ThingSpeak Data Loader
  * 
  * Copyright (c) 2015 Bright Things UN Ltd.
- * 
  *
  */
 
