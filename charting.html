@@ -1,0 +1,98 @@
+<html>
+
+    <head>
+        <!--Load the AJAX API-->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/TsData.js"></script>
+
+        <script type="text/javascript">
+
+	        // We instantiate one TsData object per channel here in the header
+	        var ts = new TsData();
+	        // ts.setBaseUrl("");
+	        ts.setChannelId(57781);
+	        // ts.setApiKey("");
+	     ts.setResults(7199);
+	    // ts.setDays(365);
+	        // ts.setStart("");
+	        // ts.setEnd("");
+	        // ts.setMin(0);
+	        // ts.setMax(100);
+	        // ts.setRound(2);
+	        // ts.setTimescale(10);
+	        // ts.setSum(10);
+	     ts.setAverage(50);
+	        // ts.setMedian(100);
+	
+
+	        var dataTable;
+	        var chart1, view1, options1;
+	        // var chart2, view2, options2;
+
+	        function refreshData() {
+                    console.log("RefreshData Called");
+                    dataTable = ts.getDataTable(showCharts);
+        	}
+
+	        function showCharts() {
+                console.log("ShowCharts Called");
+
+                // We can introduce views here to limit the number of columns 
+                // displayed.  Default is to show all columns.
+                view1 = new google.visualization.DataView(dataTable);
+                view1.setColumns([0, 1, 2, 3, 4]);
+                chart1.draw(view1, options1);
+                // view2 = new google.visualization.DataView(dataTable);
+                // chart2.draw(view2, options2);
+	        }
+
+	        function initCharts() {
+
+                chart1 = new google.visualization.ComboChart(document.getElementById('chart1'));
+                options1 = {title: "BTS Site 1", 
+                			width: 900, height: 500,
+                			explorer: {maxZoomOut: 0, maxZoomIn: 100},
+                			vAxis: [{title: 'Temperature', maxValue: 100},{title: 'Power', maxValue: 10}],
+      						hAxis: {title: 'Time'},
+      						seriesType: 'area',
+      							 series: {	0: {type: 'area', targetAxisIndex: 1},
+      							 			1: {type: 'area', targetAxisIndex: 0},
+      							 			2: {type: 'line', targetAxisIndex: 0},
+      							 			3: {type: 'line', targetAxisIndex: 0},
+      							 			4: {type: 'line', targetAxisIndex: 0}}
+
+                };
+
+                // chart2 = new google.visualization.AreaChart(document.getElementById('chart2'));
+                // options2 = {width: 800, height: 600};
+
+	            refreshData();
+	        }
+
+            // load the google chart visualization
+            google.load('visualization', '1', {packages:['corechart']});
+            google.setOnLoadCallback(initCharts);
+
+            // setInterval('refreshData()', 60000);
+            
+            
+            
+        </script>
+        
+        
+
+    </head>
+
+    <body>
+        <h1>Populating Google Charts with ThingSpeak Data</h1>
+        <p>Notice that these charts are live</p>
+        <h2>Line Chart</h2>
+        <div id="chart1"></div>
+        <h2>Area Chart</h2>
+        <div id="chart2"></div>
+    </body>
+</html>
+<!--+
+    | vim: ts=4 et nowrap
+    +-->
