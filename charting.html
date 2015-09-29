@@ -11,9 +11,17 @@
 	        // We instantiate one TsData object per channel here in the header
 	        var ts = new TsData();
 	        // ts.setBaseUrl("");
-	        ts.setChannelId(57781);
+	    ts.setChannelId(57781);
 	        // ts.setApiKey("");
-	     ts.setResults(7199);
+	     	
+	     	// It is necessary to specify the number of rows to import
+	        // It would be best to interrogate the channel directly to establish its size
+	        // and import all of it into the data table object. The amount of data to 
+	        // actually display is by view.setRows below
+	    
+	    ts.setResults(7199);
+	     
+	     
 	    // ts.setDays(365);
 	        // ts.setStart("");
 	        // ts.setEnd("");
@@ -22,7 +30,7 @@
 	        // ts.setRound(2);
 	        // ts.setTimescale(10);
 	        // ts.setSum(10);
-	     ts.setAverage(50);
+	        // ts.setAverage(50);
 	        // ts.setMedian(100);
 	
 
@@ -40,8 +48,10 @@
 
                 // We can introduce views here to limit the number of columns 
                 // displayed.  Default is to show all columns.
+                // The rows are also limitable. New views are needed from user interaction.
                 view1 = new google.visualization.DataView(dataTable);
                 view1.setColumns([0, 1, 2, 3, 4]);
+                view1.setRows(300,500);
                 chart1.draw(view1, options1);
                 // view2 = new google.visualization.DataView(dataTable);
                 // chart2.draw(view2, options2);
