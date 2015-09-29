@@ -1,5 +1,4 @@
 <html>
-
     <head>
         <!--Load the AJAX API-->
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -9,23 +8,28 @@
         <script type="text/javascript">
 
 	        // We instantiate one TsData object per channel here in the header
+				        // We instantiate one TsData object per channel here in the header
+
 	        var ts = new TsData();
 	        // ts.setBaseUrl("");
-	        ts.setChannelId(57433);
+			// original ChannelId(57433);
+			ts.setChannelId(57781);
 	        // ts.setApiKey("");
-	        // ts.setResults(100);
-	        ts.setDays(30);
+	     	
+	       // Using this in the context of static data. set.Days is in the context of "days prior to now up to now" which will exclude all history.
+			ts.setResults(60*24);
+	     
+			//ts.setDays(30);
 	        // ts.setStart("");
 	        // ts.setEnd("");
 	        // ts.setMin(0);
 	        // ts.setMax(100);
-	        ts.setRound(2);
+	        // ts.setRound(2);
 	        // ts.setTimescale(10);
 	        // ts.setSum(10);
-	        ts.setAverage(10);
+	        // ts.setAverage(50);
 	        // ts.setMedian(100);
 	
-
 	        var dataTable;
 	        var dash1, cont1, chart1, view1, options1;
 
@@ -48,18 +52,24 @@
                     // Filter by the date axis.
                         'filterColumnIndex': 0,
                         'ui': {
-                            'chartType': 'AreaChart',
+                            'chartType': 'ComboChart',
                             'chartOptions': {
+								//'width': 500,
+								//'height': 300,
                                 'chartArea': {'width': '90%'},
-                                'hAxis': {'baselineColor': 'none'}
+                                'hAxis': {'baselineColor': 'none'},
+                            	'vAxis': [{'title': 'Temperature', 'maxValue': 100, 'color': '#0A4C94'},{'title': 'Power', 'maxValue': '10','baselineColor': '#E08F14' }],
+								'series': {	 0: {'targetAxisIndex': 0,'color':'#7c7c7c'}										
+										}
                             },
-                            // Display a single series that shows the closing value of the stock.
-                            // Thus, this view has two columns: the date (axis) and the stock value (line series).
+                            // Display a single series that shows one of the series.
+                            // Thus, this view has two columns: the date (axis) and the line series.
                             'chartView': {
-                                'columns': [0, 1, 2]
+                                'columns': [0,3],
+							// 'rows':(300,500),
                             },
                             // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
-                            'minRangeSize': 86400000
+                            'minRangeSize': 86400000/24
                         }
                     },
                     // Initial range: 2012-02-09 to 2012-03-20.
@@ -79,12 +89,20 @@
 
                 // Define a time line chart
                 chart1 = new google.visualization.ChartWrapper({
-                    'chartType': 'AreaChart',
+                    'chartType': 'ComboChart',
                     'containerId': 'chart1',
                     'options': {
-                        'width': 800,
-                        'height': 600,
-                    }
+						'vAxis': [{'title': 'Temperature', 'maxValue': 100, 'color': '#0A4C94'},{'title': 'Power', 'maxValue': '10','baselineColor': '#E08F14' }],
+                          'chartArea': {'width': '90%'},
+						//'width': 800,
+                        //'height': 600,
+                        'series': {	0: {'type': 'Area', 'targetAxisIndex': 1,'color':'#00923f'},
+									1: {'type': 'Area', 'targetAxisIndex': 0,'color':'#0061a5'},
+									2: {'type': 'Line', 'targetAxisIndex': 0,'color':'#eb9721'},
+									3: {'type': 'Line','targetAxisIndex': 0,'color':'#e93222'},
+									4: {'type': 'Line', 'targetAxisIndex': 0,'color':'#f0ce20'}}
+                    },
+				
                 });
 
 	            refreshData();
@@ -93,8 +111,9 @@
             // load the google chart visualization
             google.load('visualization', '1', {packages:['corechart', 'controls']});
             google.setOnLoadCallback(initCharts);
-
-            setInterval('refreshData()', 60000);
+			
+			//This is irritating when you are trying to locate a precise point in a series - the refresh casues the chart to rescale
+           // setInterval('refreshData()', 60000); 
         </script>
 
     </head>
@@ -103,12 +122,23 @@
         <h1>Populating Google Charts with ThingSpeak Data</h1>
         <p>Notice that these charts are live</p>
         <h2>Area Chart</h2>
-        <div id="dash1">
-            <div id="cont1"></div>
-            <div id="chart1"></div>
-        </div>
+<div id="dash1" style="border: 1px solid #ccc">
+  <table class="columns">
+    <tr>
+      <td>
+        <div id="chart1" style="width: 915px; height: 300px;"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id="cont1" style="width: 915px; height: 50px;"></div>
+      </td>
+    </tr>
+  </table>
+</div>
     </body>
 </html>
+
 <!--+
     | vim: ts=4 et nowrap
     +-->
