@@ -1,0 +1,114 @@
+<html>
+
+    <head>
+        <!--Load the AJAX API-->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/TsData.js"></script>
+
+        <script type="text/javascript">
+
+	        // We instantiate one TsData object per channel here in the header
+	        var ts = new TsData();
+	        // ts.setBaseUrl("");
+	        ts.setChannelId(57433);
+	        // ts.setApiKey("");
+	        // ts.setResults(100);
+	        ts.setDays(30);
+	        // ts.setStart("");
+	        // ts.setEnd("");
+	        // ts.setMin(0);
+	        // ts.setMax(100);
+	        ts.setRound(2);
+	        // ts.setTimescale(10);
+	        // ts.setSum(10);
+	        ts.setAverage(10);
+	        // ts.setMedian(100);
+	
+
+	        var dataTable;
+	        var dash1, cont1, chart1, view1, options1;
+
+	        function refreshData() {
+                    console.log("RefreshData Called");
+                    dataTable = ts.getDataTable(showCharts);
+        	}
+
+	        function showCharts() {
+                console.log("ShowCharts Called");
+
+                // Create a dashboard.
+                dash1 = new google.visualization.Dashboard(document.getElementById('dash1'));
+
+                // Create a range slider, passing some options
+                cont1 = new google.visualization.ControlWrapper({
+                    'controlType': 'ChartRangeFilter',
+                    'containerId': 'cont1',
+                    'options': {
+                    // Filter by the date axis.
+                        'filterColumnIndex': 0,
+                        'ui': {
+                            'chartType': 'AreaChart',
+                            'chartOptions': {
+                                'chartArea': {'width': '90%'},
+                                'hAxis': {'baselineColor': 'none'}
+                            },
+                            // Display a single series that shows the closing value of the stock.
+                            // Thus, this view has two columns: the date (axis) and the stock value (line series).
+                            'chartView': {
+                                'columns': [0, 1, 3]
+                            },
+                            // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
+                            'minRangeSize': 86400000
+                        }
+                    },
+                    // Initial range: 2012-02-09 to 2012-03-20.
+                    //'state': {'range': {'start': new Date(2012, 1, 9), 'end': new Date(2012, 2, 20)}}
+                });
+
+
+                dash1.bind(cont1, chart1);
+                // We can introduce views here to limit the number of columns 
+                // displayed.  Default is to show all columns.
+                //view1 = new google.visualization.DataView(dataTable);
+                //view1.setColumns([0, 1]);
+                dash1.draw(dataTable);
+	        }
+
+	        function initCharts() {
+
+                // Define a time line chart
+                chart1 = new google.visualization.ChartWrapper({
+                    'chartType': 'AreaChart',
+                    'containerId': 'chart1',
+                    'options': {
+                        'width': 800,
+                        'height': 600,
+                    }
+                });
+
+	            refreshData();
+	        }
+
+            // load the google chart visualization
+            google.load('visualization', '1', {packages:['corechart', 'controls']});
+            google.setOnLoadCallback(initCharts);
+
+            setInterval('refreshData()', 60000);
+        </script>
+
+    </head>
+
+    <body>
+        <h1>Populating Google Charts with ThingSpeak Data</h1>
+        <p>Notice that these charts are live</p>
+        <h2>Area Chart</h2>
+        <div id="dash1">
+            <div id="cont1"></div>
+            <div id="chart1"></div>
+        </div>
+    </body>
+</html>
+<!--+
+    | vim: ts=4 et nowrap
+    +-->
